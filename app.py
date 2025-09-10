@@ -15,7 +15,7 @@ from io import BytesIO
 import sys
 import tempfile
 
-# Initialize Flask app
+
 app = Flask(__name__)
 CORS(app)
 
@@ -30,11 +30,8 @@ else:
     # Local development configuration
     app.config['UPLOAD_FOLDER'] = 'uploads'
 
-# REMOVE THIS DUPLICATE LINE:
-# app.config['UPLOAD_FOLDER'] = 'uploads'  # <-- DELETE THIS LINE
 
-# Configuration
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'bmp', 'tiff'}
 
 # Create upload directory if it doesn't exist
@@ -191,7 +188,7 @@ def export_pdf(filename):
             words = paragraph.split()
             line = ""
             for word in words:
-                if pdf.stringWidth(line + word, "Helvetica", 12) < 450:  # Page width minus margins
+                if pdf.stringWidth(line + word, "Helvetica", 12) < 450:  
                     line += word + " "
                 else:
                     lines.append(line)
