@@ -12,13 +12,28 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 from xml.etree import ElementTree as ET
 from io import BytesIO
+import sys
+import tempfile
 
 # Initialize Flask app
 app = Flask(__name__)
 CORS(app)
 
+# Set the Tesseract path for Render
+if 'RENDER' in os.environ:
+    # On Render, Tesseract is installed at /usr/bin/tesseract
+    pytesseract.pytesseract.tesseract_cmd = '/usr/bin/tesseract'
+    
+    # Create a temporary directory for uploads on Render
+    app.config['UPLOAD_FOLDER'] = tempfile.mkdtemp()
+else:
+    # Local development configuration
+    app.config['UPLOAD_FOLDER'] = 'uploads'
+
+# REMOVE THIS DUPLICATE LINE:
+# app.config['UPLOAD_FOLDER'] = 'uploads'  # <-- DELETE THIS LINE
+
 # Configuration
-app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'bmp', 'tiff'}
 
@@ -277,4 +292,4 @@ def cleanup_files():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=True) 
