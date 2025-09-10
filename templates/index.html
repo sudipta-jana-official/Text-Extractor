@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✍️ Image/Handwriting to Text Converter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="glass-container">
+        <header>
+            <h1>✍️ Text Extractor</h1>
+            <p class="subtitle">Convert Handwriting or Image to digital text with AI-powered OCR</p>
+        </header>
+
+        <main>
+            <div class="upload-section">
+                <div class="image-container" id="image-container">
+                    <img id="preview-image" src="" alt="Preview">
+                    <div id="placeholder-text">
+                        📷 Drag & drop your document here<br>
+                        <span class="drag-drop-text">or use the buttons below</span>
+                    </div>
+                </div>
+
+                <div class="tips">
+                    <h3>💡 Tips for better results:</h3>
+                    <ul>
+                        <li>Use clear, well-lit images</li>
+                        <li>Ensure good contrast between text and background</li>
+                        <li>Take pictures from directly above the text</li>
+                        <li>Avoid shadows and glare</li>
+                    </ul>
+                </div>
+
+                <div class="btn-group">
+                    <!-- FIXED UPLOAD BUTTON -->
+                    <label for="file-upload" class="btn btn-primary">
+                        📂 Upload Image
+                    </label>
+                    <input type="file" id="file-upload" accept="image/*" hidden>
+                    
+                    <button class="btn btn-secondary" id="camera-btn">📸 Scan Notes</button>
+                    <button class="btn btn-success" id="convert-btn">⚡ Extract Text</button>
+                    <button class="btn btn-danger" id="clear-btn">🧹 Clear All</button>
+                </div>
+            </div>
+
+            <div class="export-section">
+                <h2>📤 Export Options</h2>
+                <div class="export-buttons">
+                    <button class="export-btn" id="export-pdf" disabled>📄 PDF</button>
+                    <button class="export-btn" id="export-json" disabled>🔷 JSON</button>
+                    <button class="export-btn" id="export-xml" disabled>📊 XML</button>
+                </div>
+            </div>
+
+            <div class="result-section">
+                <h2>📝 Extracted Text</h2>
+                <textarea id="output-text" placeholder="Your extracted text will appear here..." readonly></textarea>
+            </div>
+        </main>
+    </div>
+
+    <!-- Camera Modal -->
+    <div id="camera-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📸 Camera Capture</h2>
+                <span class="close" id="close-camera">&times;</span>
+            </div>
+            <div class="modal-body">
+                <video id="camera-preview" autoplay playsinline></video>
+                <button id="capture-btn" class="btn btn-success">
+                    📷 Capture Image
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="notification" class="notification"></div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
